@@ -14,7 +14,7 @@ require(['vs/editor/editor.main'], function () {
 function analyzeCode() {
   const code = editor.getValue();
 
-  fetch("http://127.0.0.1:5000/analyze", {
+  fetch("https://codexia-backend.onrender.com/analyze", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ code })
@@ -41,3 +41,4 @@ function analyzeCode() {
     }
   });
 }
+
