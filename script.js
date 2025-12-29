@@ -19,15 +19,21 @@ function analyzeCode() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ code })
   })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("result").classList.remove("hidden");
+  .then(res => {
+  console.log("HTTP status:", res.status);
+  return res.json();
+})
+.then(data => {
+  console.log("Backend response:", data);
 
-    document.getElementById("language").textContent = data.language;
-    document.getElementById("issue").textContent = data.issue;
-    document.getElementById("lines").textContent = data.lines;
-    document.getElementById("impact").textContent = data.impact;
-    document.getElementById("suggestion").textContent = data.suggestion;
+  const result = document.getElementById("result");
+  result.classList.remove("hidden");
+
+  document.getElementById("language").textContent = data.language || "N/A";
+  document.getElementById("issue").textContent = data.issue || "N/A";
+  document.getElementById("lines").textContent = data.lines || "N/A";
+  document.getElementById("impact").textContent = data.impact || "N/A";
+  document.getElementById("suggestion").textContent = data.suggestion || "N/A";
 
     if (data.line_number) {
       monaco.editor.setModelMarkers(editor.getModel(), "ai", [{
@@ -41,4 +47,5 @@ function analyzeCode() {
     }
   });
 }
+
 
